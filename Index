@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/png" href="images/fav.png" />
+<title>Energie & Besparing </title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header class="page-header">
+    <img src="images/VMG-logo.svg" alt="Bedrijfslogo" class="logo" />
+    <div class="title">
+      <h1>Besparing Dashboard</h1>
+      <p>Overzicht | Elektriciteit • Gas • Onderhoud | PDF</p>
+    </div>
+
+    <div style="text-align:right;">
+          <button onclick="exportPDF()" class="pdf-button">
+              📄 Download PDF
+            </button>
+        </div>
+
+  </header>
+
+  <div class="layout">
+    <div class="left">
+      <section>
+        <h3>⚡ Elektriciteit</h3>
+        <div class="slider-row">
+          <label>Jaarverbruik (kWh)</label>
+          <input id="slider_elec_vol" type="range" min="0" max="15000000" step="1000" value="2450000" oninput="updateLabel('elec_vol', 'kWh', 0)">
+          <span id="param_elec_vol">2.450.000 kWh</span>
+        </div>
+
+        <div class="slider-row">
+          <label>Tarief Elektriciteit (€ / kWh)</label>
+          <input id="slider_elec_inv" type="range" min="0" max="3" step="0.05" value="1" oninput="updateLabel('elec_inv', '€', 2)">
+          <span id="param_elec_inv">€ 0,20 </span>
+        </div>
+
+        <div class="total">Jaarlijkse elektriciteitskosten: <span id="elec_total">0</span></div>
+      </section>
+
+      <section>
+        <h3>🔥 Gas</h3>
+        <div class="slider-row">
+          <label>Jaarverbruik (m³)</label>
+          <input id="slider_gas_vol" type="range" min="0" max="8000000" step="1000" value="1250000" oninput="updateLabel('gas_vol', 'm³', 0)">
+          <span id="param_gas_vol">1.250.000 m³ </span>
+        </div>
+
+        <div class="slider-row">
+          <label>Tarief Gas (€ / m³)</label>
+          <input id="slider_gas_inv" type="range" min="0" max="3" step="0.05" value="1" oninput="updateLabel('gas_inv', '€', 2)">
+          <span id="param_gas_inv">€ 1,00 </span>
+        </div>
+
+        <div class="total">Jaarlijkse gaskosten: <span id="gas_total">0</span></div>
+      </section>
+
+      <section>
+        <h3>🔧 Onderhoud</h3>
+        <div class="slider-row">
+          <label>Jaarlijkse kosten (€)</label>
+          <input id="slider_maint_cost" type="range" min="0" max="15000000" step="1000" value="1850000" oninput="updateLabel('maint_cost', '€', 0)">
+          <span id="param_maint_cost">€ 1.850.000 </span>
+        </div>
+
+        <div class="total">Jaarlijkse onderhoudskosten: <span id="maint_total">0</span></div>
+      </section>
+
+      <section>
+        <h3>📦 Productievolume</h3>
+        <div class="slider-row">
+          <label>Jaarproductievolume (t)</label>
+          <input id="slider_prod_vol" type="range" min="0" max="1500000" step="500" value="334232" oninput="updateLabel('prod_vol', 'ton', 0)">
+          <span id="param_prod_vol">334.232 ton </span>
+        </div>
+
+        <div class="total">Jaarproductievolume: <span id="prod_total">0</span></div>
+      </section>
+    </div>
+
+    <div class="right">
+      <section>
+        <h3>💰 Besparingspotentieel</h3>
+
+        <!-- Elektriciteit -->
+        <div class="slider-row">
+          <label>Elektriciteit (5% - 20%)</label>
+          <input id="slider_elec" type="range" min="0" max="20" value="5" oninput="updateLabel('elec','%',0)">
+          <span id="param_elec">5 %</span>
+        </div>
+
+        <!-- Gas -->
+        <div class="slider-row">
+          <label>Gas (5% - 20%)</label>
+          <input id="slider_gas" type="range" min="0" max="20" value="5" oninput="updateLabel('gas','%',0)">
+          <span id="param_gas">5 %</span>
+        </div>
+
+        <!-- Onderhoud -->
+        <div class="slider-row">
+          <label>Onderhoud (10% - 20%)</label>
+          <input id="slider_maint" type="range" min="0" max="20" value="10" oninput="updateLabel('maint','%',0)">
+          <span id="param_maint">10 %</span>
+        </div>
+         
+      </section>
+
+      <section style="margin-top: 12px; text-align:center;">
+
+        <header class="page-header">
+          <div class="title">
+            <h1>Totaal resultaat</h1>
+            <p>Besparing | Elektriciteit • Gas • Onderhoud </p>
+          </div>
+        </header>
+
+        <div class="gauge-row">
+          <div class="gauge-box">
+              <h4 class="gauge-title">Totaal</h4>
+              <canvas id="savingGauge" width="300" height="205"></canvas>
+              <div id="gaugeLabel"><span id="grand_total">0</span></div>
+          </div>
+          <div class="gauge-box">
+              <h4 class="gauge-title">Elektriciteit</h4>
+              <canvas id="electricGauge" width="300" height="205"></canvas>
+              <div id="gaugeLabel"><span id="elect_total">0</span></div>
+          </div>
+          <div class="gauge-box">
+              <h4 class="gauge-title">Gas</h4>
+              <canvas id="gasGauge" width="300" height="205"></canvas>
+              <div id="gaugeLabel"><span id="gast_total">0</span></div>
+          </div>
+          <div class="gauge-box">
+              <h4 class="gauge-title">Onderhoud</h4>
+              <canvas id="maintGauge" width="300" height="205"></canvas>
+              <div id="gaugeLabel"><span id="maintt_total">0</span></div>
+          </div>
+        </div>
+        
+      </section>
+
+    </div>
+    
+  </div>
+
+<section class="results">
+  <div class="result-grid">
+
+    <div class="result-box">
+      <header class="result-header">
+        <div class="title">
+          <p1>Huidige kosten per ton</p1>
+        </div>
+        <svg class="results-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="10" width="2" height="7" />
+          <rect x="9" y="6" width="2" height="11" />
+          <rect x="14" y="13" width="2" height="4" />
+        </svg>
+      </header>
+      <h4>Kosten</h4>
+      <div class="result-row"><label>Onderhoudskosten per ton</label><span id="maint_now">0</span></div>
+      <div class="result-row"><label>Energiekosten per ton</label><span id="energy_now">0</span></div> 
+      <div class="result-row total-row"><label>Totaal</label><span id="maint_energy_now">0</span></div>
+      <h4>Energieverbruik</h4>
+      <div class="result-row"><label>Gas m³ / ton </label><span id="m3_now">0</span></div>
+      <div class="result-row"><label>Electriciteit kWh / ton </label><span id="kwh_now">0</span></div>
+    </div>
+
+    <div class="result-box">
+      <header class="result-header">
+        <div class="title">
+          <p1>Nieuwe kosten per ton</p1>
+        </div>
+        <svg class="results-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="10" width="2" height="7" />
+          <rect x="9" y="6" width="2" height="11" />
+          <rect x="14" y="13" width="2" height="4" />
+        </svg>
+      </header>
+      <h4>Kosten</h4>
+      <div class="result-row"><label>Onderhoudskosten per ton</label><span id="maint_new">0</span></div>
+      <div class="result-row"><label>Energiekosten per ton</label><span id="energy_new">0</span></div>
+      <div class="result-row total-row"><label>Totaal</label><span id="maint_energy_new">0</span></div>
+      <h4>Energieverbruik</h4>
+      <div class="result-row"><label>Gas m³ gas / ton </label><span id="m3_new">0</span></div>
+      <div class="result-row"><label>Electriciteit kWh / ton </label><span id="kwh_new">0</span></div>
+    </div>
+
+    <div class="result-box">
+      <header class="result-header">
+        <div class="title">
+          <p1>Besparing</p1> 
+        </div>
+        <svg class="results-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="10" width="2" height="7" />
+          <rect x="9" y="6" width="2" height="11" />
+          <rect x="14" y="13" width="2" height="4" />
+        </svg>
+      </header>
+      <h4>Besparingspotentieel</h4>
+      <div class="result-row"><label>Onderhoudskosten</label><span id="maint_save">0</span></div>
+      <div class="result-row"><label>Energiekosten</label><span id="energy_save">0</span></div>
+      <div class="result-row total-row"><label>Totaal</label><span id="maint_energy_save">0</span></div>
+      <h4>Energieverbruik</h4>
+      <div class="result-row"><label>Besparing gas</label><span id="m3_save">0</span></div>
+      <div class="result-row"><label>Besparing electriciteit</label><span id="kwh_save">0</span></div>
+    </div>
+
+  </div>
+</section>
+
+<script src="js/app.js"></script>
+<script src="js/export.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>
