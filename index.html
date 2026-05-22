@@ -30,13 +30,13 @@
         <h3>⚡ Elektriciteit</h3>
         <div class="slider-row">
           <label>Jaarverbruik (kWh)</label>
-          <input id="slider_elec_vol" type="range" min="0" max="15000000" step="1000" value="2450000" oninput="updateLabel('elec_vol', 'kWh', 0)">
+          <input id="slider_elec_vol" type="range" min="1500000" max="40000000" step="1000" value="2450000" oninput="updateLabel('elec_vol', 'kWh', 0)">
           <span id="param_elec_vol">2.450.000 kWh</span>
         </div>
 
         <div class="slider-row">
           <label>Tarief Elektriciteit (€ / kWh)</label>
-          <input id="slider_elec_inv" type="range" min="0" max="3" step="0.05" value="1" oninput="updateLabel('elec_inv', '€', 2)">
+          <input id="slider_elec_inv" type="range" min="0.08" max="0.3" step="0.05" value="0.2" oninput="updateLabel('elec_inv', '€', 2)">
           <span id="param_elec_inv">€ 0,20 </span>
         </div>
 
@@ -47,13 +47,13 @@
         <h3>🔥 Gas</h3>
         <div class="slider-row">
           <label>Jaarverbruik (m³)</label>
-          <input id="slider_gas_vol" type="range" min="0" max="8000000" step="1000" value="1250000" oninput="updateLabel('gas_vol', 'm³', 0)">
+          <input id="slider_gas_vol" type="range" min="450000" max="6000000" step="10000" value="1200000" oninput="updateLabel('gas_vol', 'm³', 0)">
           <span id="param_gas_vol">1.250.000 m³ </span>
         </div>
 
         <div class="slider-row">
           <label>Tarief Gas (€ / m³)</label>
-          <input id="slider_gas_inv" type="range" min="0" max="3" step="0.05" value="1" oninput="updateLabel('gas_inv', '€', 2)">
+          <input id="slider_gas_inv" type="range" min="0.65" max="1.05" step="0.05" value="1" oninput="updateLabel('gas_inv', '€', 2)">
           <span id="param_gas_inv">€ 1,00 </span>
         </div>
 
@@ -64,8 +64,8 @@
         <h3>🔧 Onderhoud</h3>
         <div class="slider-row">
           <label>Jaarlijkse kosten (€)</label>
-          <input id="slider_maint_cost" type="range" min="0" max="15000000" step="1000" value="1850000" oninput="updateLabel('maint_cost', '€', 0)">
-          <span id="param_maint_cost">€ 1.850.000 </span>
+          <input id="slider_maint_cost" type="range" min="50000" max="5000000" step="10000" value="900000" oninput="updateLabel('maint_cost', '€', 0)">
+          <span id="param_maint_cost">€ 900.000 </span>
         </div>
 
         <div class="total">Jaarlijkse onderhoudskosten: <span id="maint_total">0</span></div>
@@ -75,8 +75,8 @@
         <h3>📦 Productievolume</h3>
         <div class="slider-row">
           <label>Jaarproductievolume (t)</label>
-          <input id="slider_prod_vol" type="range" min="0" max="1500000" step="500" value="334232" oninput="updateLabel('prod_vol', 'ton', 0)">
-          <span id="param_prod_vol">334.232 ton </span>
+          <input id="slider_prod_vol" type="range" min="50000" max="500000" step="10000" value="150000" oninput="updateLabel('prod_vol', 'ton', 0)">
+          <span id="param_prod_vol">150.000 ton </span>
         </div>
 
         <div class="total">Jaarproductievolume: <span id="prod_total">0</span></div>
